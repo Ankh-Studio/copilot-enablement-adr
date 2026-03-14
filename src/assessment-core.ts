@@ -6,7 +6,6 @@
 
 import { CopilotClient, defineTool } from '@github/copilot-sdk';
 import { analyser, FSProvider } from '@specfy/stack-analyser';
-import { Octokit } from '@octokit/rest';
 import '@specfy/stack-analyser/dist/autoload';
 import { DataQualityValidator } from './data-quality-validator';
 import { AssessmentErrorHandler } from './error-handler';
@@ -16,7 +15,6 @@ import { CopilotFeatureScanner } from './copilot-feature-scanner';
 export interface AssessmentOptions {
   repoPath?: string;
   githubUrl?: string;
-  githubToken?: string;
 }
 
 export interface TechStackInsights {
@@ -28,16 +26,6 @@ export interface TechStackInsights {
   error?: string;
 }
 
-export interface SecurityAnalysis {
-  available: boolean;
-  reason?: string;
-  features: {
-    codeql?: any;
-    dependabot?: any;
-    secretScanning?: any;
-    securityOverview?: any;
-  };
-}
 
 export interface ArtifactDetection {
   copilotInstructions: boolean;
@@ -128,63 +116,6 @@ export const analyzeTechStack = defineTool('analyze_tech_stack', {
         confidence: 'low',
         summary: 'Analysis failed - basic file detection only',
         error: (error as Error).message,
-      };
-    }
-  },
-});
-
-export const analyzeGitHubSecurity = defineTool('analyze_github_security', {
-  description: 'Analyze GitHub security features and posture',
-  parameters: {
-    type: 'object',
-    properties: {
-      githubUrl: { type: 'string', description: 'GitHub repository URL' },
-      githubToken: {
-        type: 'string',
-        description: 'GitHub personal access token',
-      },
-    },
-    required: ['githubUrl'],
-  },
-  handler: async (args: {
-    githubUrl: string;
-    githubToken?: string;
-  }): Promise<SecurityAnalysis> => {
-    if (!args.githubToken) {
-      return {
-        available: false,
-        reason: 'GitHub token not provided',
-        features: {},
-      };
-    }
-
-    try {
-      const octokit = new Octokit({ auth: args.githubToken });
-      const [owner, repo] = extractRepoInfo(args.githubUrl);
-
-      // Check security features
-      const [codeql, dependabot, secretScanning, securityOverview] =
-        await Promise.all([
-          getCodeQLStatus(octokit, owner, repo),
-          getDependabotStatus(octokit, owner, repo),
-          getSecretScanningStatus(octokit, owner, repo),
-          getSecurityOverview(octokit, owner, repo),
-        ]);
-
-      return {
-        available: true,
-        features: {
-          codeql,
-          dependabot,
-          secretScanning,
-          securityOverview,
-        },
-      };
-    } catch (error) {
-      return {
-        available: false,
-        reason: (error as Error).message,
-        features: {},
       };
     }
   },
@@ -432,8 +363,7 @@ export class AssessmentEngine {
 
   async runAssessment(
     repoPath: string,
-    githubUrl?: string,
-    _githubToken?: string
+    githubUrl?: string
   ): Promise<{
     analysis: string;
     errors: any[];
@@ -449,7 +379,6 @@ export class AssessmentEngine {
         model: 'gpt-4.1',
         tools: [
           analyzeTechStack,
-          analyzeGitHubSecurity,
           detectArtifacts,
           classifyRepository,
           scanCopilotFeatures,
@@ -460,7 +389,6 @@ export class AssessmentEngine {
 
       // Collect analysis data with error handling
       let techStackData: any = null;
-      let securityData: any = null;
       let artifactData: any = null;
 
       try {
@@ -471,19 +399,6 @@ export class AssessmentEngine {
       } catch (error) {
         errors.push(
           AssessmentErrorHandler.handleTechStackError(error as Error, repoPath)
-        );
-      }
-
-      try {
-        if (githubUrl) {
-          const securityResult = await session.sendAndWait({
-            prompt: `Analyze GitHub security features for: ${githubUrl}`,
-          });
-          securityData = securityResult?.data;
-        }
-      } catch (error) {
-        errors.push(
-          AssessmentErrorHandler.handleSecurityError(error as Error, githubUrl)
         );
       }
 
@@ -501,7 +416,6 @@ export class AssessmentEngine {
       // Generate data quality report
       const dataQualityReport = DataQualityValidator.generateReport(
         techStackData,
-        securityData,
         artifactData
       );
 
@@ -520,10 +434,9 @@ ${errorReport.errors.length > 0 ? AssessmentErrorHandler.formatForADR(errorRepor
 
 Please use the available tools to:
 1. Analyze the tech stack 
-2. Check GitHub security features (if GitHub URL provided)
-3. Detect relevant artifacts
-4. Classify repository type, complexity, domain, and team size
-5. Scan GitHub Copilot features and configurations
+2. Detect relevant artifacts
+3. Classify repository type, complexity, domain, and team size
+4. Scan GitHub Copilot features and configurations
 
 Then provide:
 - Repository classification (type, complexity, domain, team size)
@@ -594,79 +507,5 @@ Make it professional, actionable, and evidence-based.`;
 
     await this.client.stop();
     return response?.data.content || '';
-  }
-}
-
-// Helper functions
-function extractRepoInfo(githubUrl: string): [string, string] {
-  const match = githubUrl.match(/github\.com[:/](.+?)(\.git)?$/);
-  if (!match) throw new Error('Invalid GitHub URL format');
-  return [match[1].split('/')[0], match[1].split('/')[1]];
-}
-
-async function getCodeQLStatus(octokit: Octokit, owner: string, repo: string) {
-  try {
-    const { data } = await octokit.rest.codeScanning.listAlertsForRepo({
-      owner,
-      repo,
-      state: 'open',
-    });
-    return { enabled: true, openAlerts: data.length };
-  } catch (error) {
-    return { enabled: false, reason: (error as Error).message };
-  }
-}
-
-async function getDependabotStatus(
-  octokit: Octokit,
-  owner: string,
-  repo: string
-) {
-  try {
-    const { data } = await octokit.rest.repos.get({
-      owner,
-      repo,
-    });
-    return {
-      enabled: data.security_and_analysis?.dependabot_security_updates || false,
-    };
-  } catch (error) {
-    return { enabled: false, reason: (error as Error).message };
-  }
-}
-
-async function getSecretScanningStatus(
-  octokit: Octokit,
-  owner: string,
-  repo: string
-) {
-  try {
-    const { data } = await octokit.rest.secretScanning.listAlertsForRepo({
-      owner,
-      repo,
-      state: 'open',
-    });
-    return { enabled: true, openAlerts: data.length };
-  } catch (error) {
-    return { enabled: false, reason: (error as Error).message };
-  }
-}
-
-async function getSecurityOverview(
-  octokit: Octokit,
-  owner: string,
-  repo: string
-) {
-  try {
-    const { data } = await octokit.rest.repos.get({ owner, repo });
-    return {
-      isPrivate: data.private,
-      hasAdvancedSecurity:
-        data.security_and_analysis?.advanced_security || false,
-      vulnerabilityAlerts:
-        data.security_and_analysis?.dependabot_security_updates || false,
-    };
-  } catch (error) {
-    return { error: (error as Error).message };
   }
 }

@@ -22,12 +22,10 @@ export type { AssessmentOptions } from './src/assessment-core';
 export default class CopilotPoweredAssessment {
   private repoPath: string;
   private githubUrl?: string;
-  private githubToken?: string;
 
   constructor(options: AssessmentOptions = {}) {
     this.repoPath = options.repoPath || process.cwd();
     this.githubUrl = options.githubUrl;
-    this.githubToken = options.githubToken;
   }
 
   /**
@@ -42,8 +40,7 @@ export default class CopilotPoweredAssessment {
     const engine = new AssessmentEngine();
     const result = await engine.runAssessment(
       this.repoPath,
-      this.githubUrl,
-      this.githubToken
+      this.githubUrl
     );
 
     return result.analysis;
@@ -74,8 +71,7 @@ export default class CopilotPoweredAssessment {
     const engine = new AssessmentEngine();
     return engine.runAssessment(
       this.repoPath,
-      this.githubUrl,
-      this.githubToken
+      this.githubUrl
     );
   }
 }

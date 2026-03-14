@@ -14,7 +14,6 @@ import CopilotPoweredAssessment from '@ankh-studio/copilot-enablement-adr';
 const assessment = new CopilotPoweredAssessment({
   repoPath: './my-project',
   githubUrl: 'https://github.com/owner/repo',
-  githubToken: process.env.GITHUB_TOKEN,
 });
 
 const analysis = await assessment.analyze();
@@ -25,10 +24,10 @@ console.log(adr);
 ## 📋 Features
 
 - **🤖 Copilot SDK Powered**: Leverages GitHub Copilot's reasoning engine for analysis
-- **� Focused Data Collection**: Simple tools for tech stack, security, and artifact detection
-- **📊 Evidence-Based Analysis**: Copilot interprets signals and provides nuanced insights
-- **📝 Consultant-Quality ADRs**: Professional proposals with contextual recommendations
-- **� Tool-Based Architecture**: Extensible with custom analysis tools
+- **🔍 Focused Data Collection**: Simple tools for tech stack and artifact detection
+- **📊 Evidence Based Analysis**: Copilot interprets signals and provides nuanced insights
+- **📝 Consultant Quality ADRs**: Professional proposals with contextual recommendations
+- **🛠️ Tool Based Architecture**: Extensible with custom analysis tools
 
 ## 🦺 Prerequisites
 
@@ -73,7 +72,6 @@ console.log(result.techStack.summary);
 const assessment = new AIEnablementAssessment({
   repoPath: '/path/to/repo',
   githubUrl: 'https://github.com/owner/repo',
-  githubToken: 'your-github-token',
 });
 
 const result = await assessment.analyze();
@@ -101,12 +99,6 @@ copilot run ai-enablement-assessment --repo ./my-project
 - Infrastructure and SaaS services
 - Development tools and build systems
 - Database and storage technologies
-
-### GitHub Advanced Security
-
-- CodeQL scanning setup and results
-- Dependabot alerts and dependency review
-- Secret scanning configuration and findings
 
 ### Readiness Assessment
 

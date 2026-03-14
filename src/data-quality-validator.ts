@@ -8,14 +8,12 @@
 export interface DataQualityReport {
   completeness: {
     techStack: 'complete' | 'partial' | 'missing';
-    githubSecurity: 'complete' | 'partial' | 'missing';
     documentation: 'complete' | 'partial' | 'missing';
     testing: 'complete' | 'partial' | 'missing';
   };
   confidence: {
     overall: 'high' | 'medium' | 'low';
     techStack: 'high' | 'medium' | 'low';
-    security: 'high' | 'medium' | 'low';
     artifacts: 'high' | 'medium' | 'low';
   };
   missingData: string[];
@@ -37,24 +35,6 @@ export class DataQualityValidator {
 
     if (techCount > 5 && langCount > 1) return 'complete';
     if (techCount > 2 && langCount > 0) return 'partial';
-    return 'missing';
-  }
-
-  /**
-   * Validate GitHub security data availability
-   */
-  static validateGitHubSecurity(
-    securityAnalysis: any
-  ): DataQualityReport['completeness']['githubSecurity'] {
-    if (!securityAnalysis || !securityAnalysis.available) return 'missing';
-
-    const features = securityAnalysis.features;
-    const featureCount = Object.keys(features || {}).filter(
-      key => features[key]
-    ).length;
-
-    if (featureCount >= 3) return 'complete';
-    if (featureCount >= 1) return 'partial';
     return 'missing';
   }
 
@@ -153,12 +133,6 @@ export class DataQualityValidator {
       );
     }
 
-    if (completeness.githubSecurity === 'missing') {
-      warnings.push(
-        '⚠️  GitHub security data unavailable - cannot verify CodeQL, Dependabot, or Secret Scanning'
-      );
-    }
-
     if (completeness.documentation === 'missing') {
       warnings.push(
         '⚠️  No documentation detected - cannot assess documentation quality'
@@ -181,12 +155,6 @@ export class DataQualityValidator {
     completeness: DataQualityReport['completeness']
   ): string[] {
     const limitations: string[] = [];
-
-    if (completeness.githubSecurity !== 'complete') {
-      limitations.push(
-        'Security assessment limited by GitHub access availability'
-      );
-    }
 
     if (completeness.techStack !== 'complete') {
       limitations.push(
@@ -215,12 +183,6 @@ export class DataQualityValidator {
   ): string[] {
     const recommendations: string[] = [];
 
-    if (completeness.githubSecurity === 'missing') {
-      recommendations.push(
-        '🔗 Provide GitHub repository URL and access token for security analysis'
-      );
-    }
-
     if (completeness.techStack === 'missing') {
       recommendations.push(
         '📁 Ensure repository contains package.json, requirements.txt, or similar dependency files'
@@ -247,12 +209,10 @@ export class DataQualityValidator {
    */
   static generateReport(
     techStackAnalysis: any,
-    securityAnalysis: any,
     artifactAnalysis: any
   ): DataQualityReport {
     const completeness = {
       techStack: this.validateTechStack(techStackAnalysis),
-      githubSecurity: this.validateGitHubSecurity(securityAnalysis),
       documentation: this.validateDocumentation(artifactAnalysis),
       testing: this.validateTesting(artifactAnalysis),
     };
@@ -280,7 +240,6 @@ export class DataQualityValidator {
       '',
       '### Data Completeness',
       `- **Tech Stack**: ${report.completeness.techStack}`,
-      `- **GitHub Security**: ${report.completeness.githubSecurity}`,
       `- **Documentation**: ${report.completeness.documentation}`,
       `- **Testing**: ${report.completeness.testing}`,
       '',

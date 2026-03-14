@@ -1,17 +1,15 @@
 import TechStackAnalyzer from '../../tech-stack-analyzer/scripts/analyzer';
-import SecurityScanner from '../../security-scanner/scripts/scanner';
 import ReadinessScorer from '../../readiness-scorer/scripts/scorer';
 import ADRGenerator from '../../adr-generator/scripts/generator';
 
 export interface OrchestratorOptions {
   repoPath?: string;
   githubUrl?: string;
-  githubToken?: string;
   adrTemplate?: 'consultant' | 'technical' | 'executive';
   orgContext?: {
     size?: 'small' | 'medium' | 'large';
     industry?: string;
-    compliance?: string[];
+    aiMaturity?: number;
   };
 }
 
@@ -39,14 +37,12 @@ export interface OrchestrationResult {
 class AIEnablementOrchestrator {
   private repoPath: string;
   private githubUrl?: string;
-  private githubToken?: string;
   private adrTemplate: string;
   private orgContext: any;
 
   constructor(options: OrchestratorOptions = {}) {
     this.repoPath = options.repoPath || process.cwd();
     this.githubUrl = options.githubUrl;
-    this.githubToken = options.githubToken;
     this.adrTemplate = options.adrTemplate || 'consultant';
     this.orgContext = options.orgContext || {};
   }
@@ -57,24 +53,20 @@ class AIEnablementOrchestrator {
 
     try {
       // Phase 1: Analysis
-      const [techStackResult, securityResult] = await Promise.all([
-        this.executeTechStackAnalysis(),
-        this.executeSecurityAnalysis(),
-      ]);
-
-      results.push(techStackResult, securityResult);
+      const techStackResult = await this.executeTechStackAnalysis();
+      results.push(techStackResult);
 
       // Phase 2: Readiness Scoring
       const readinessResult = await this.executeReadinessScoring(
         techStackResult.data,
-        securityResult.data
+        null
       );
       results.push(readinessResult);
 
       // Phase 3: ADR Generation
       const adrResult = await this.executeADRGeneration(
         techStackResult.data,
-        securityResult.data,
+        null,
         readinessResult.data
       );
       results.push(adrResult);
@@ -132,51 +124,16 @@ class AIEnablementOrchestrator {
     }
   }
 
-  private async executeSecurityAnalysis(): Promise<SkillResult> {
-    const startTime = Date.now();
-
-    try {
-      if (!this.githubUrl || !this.githubToken) {
-        return {
-          name: 'security-scanner',
-          success: false,
-          duration: Date.now() - startTime,
-          error: 'GitHub URL or token not provided',
-        };
-      }
-
-      const scanner = new SecurityScanner({
-        githubUrl: this.githubUrl,
-        githubToken: this.githubToken,
-      });
-      const result = await scanner.analyze();
-
-      return {
-        name: 'security-scanner',
-        success: true,
-        duration: Date.now() - startTime,
-        data: result,
-      };
-    } catch (error) {
-      return {
-        name: 'security-scanner',
-        success: false,
-        duration: Date.now() - startTime,
-        error: (error as Error).message,
-      };
-    }
-  }
-
   private async executeReadinessScoring(
     techStack: any,
-    security: any
+    _security: any
   ): Promise<SkillResult> {
     const startTime = Date.now();
 
     try {
       const scorer = new ReadinessScorer({
         techStack,
-        security,
+        security: undefined,
         orgContext: this.orgContext,
       });
       const result = scorer.calculateScores();
@@ -199,7 +156,7 @@ class AIEnablementOrchestrator {
 
   private async executeADRGeneration(
     techStack: any,
-    security: any,
+    _security: any,
     readiness: any
   ): Promise<SkillResult> {
     const startTime = Date.now();
@@ -218,7 +175,7 @@ class AIEnablementOrchestrator {
           summary: 'Analysis failed',
           confidence: 'low',
         },
-        githubSecurity: security || { available: false },
+        githubSecurity: { available: false },
         readinessScores: readiness || {
           repo: { score: 0, confidence: 'low', evidence: [] },
           team: { score: 0, confidence: 'low', evidence: [] },
