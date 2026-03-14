@@ -59,7 +59,7 @@ class AIEnablementOrchestrator {
       // Phase 1: Analysis
       const [techStackResult, securityResult] = await Promise.all([
         this.executeTechStackAnalysis(),
-        this.executeSecurityAnalysis()
+        this.executeSecurityAnalysis(),
       ]);
 
       results.push(techStackResult, securityResult);
@@ -90,12 +90,12 @@ class AIEnablementOrchestrator {
         metadata: {
           timestamp: new Date().toISOString(),
           repository: this.repoPath,
-          workflow: 'ai-enablement-assessment'
-        }
+          workflow: 'ai-enablement-assessment',
+        },
       };
     } catch (error) {
       const duration = Date.now() - startTime;
-      
+
       return {
         workflow: 'ai-enablement-assessment',
         duration,
@@ -103,15 +103,15 @@ class AIEnablementOrchestrator {
         metadata: {
           timestamp: new Date().toISOString(),
           repository: this.repoPath,
-          workflow: 'ai-enablement-assessment'
-        }
+          workflow: 'ai-enablement-assessment',
+        },
       };
     }
   }
 
   private async executeTechStackAnalysis(): Promise<SkillResult> {
     const startTime = Date.now();
-    
+
     try {
       const analyzer = new TechStackAnalyzer({ repoPath: this.repoPath });
       const result = await analyzer.analyze();
@@ -120,34 +120,34 @@ class AIEnablementOrchestrator {
         name: 'tech-stack-analyzer',
         success: true,
         duration: Date.now() - startTime,
-        data: result
+        data: result,
       };
     } catch (error) {
       return {
         name: 'tech-stack-analyzer',
         success: false,
         duration: Date.now() - startTime,
-        error: (error as Error).message
+        error: (error as Error).message,
       };
     }
   }
 
   private async executeSecurityAnalysis(): Promise<SkillResult> {
     const startTime = Date.now();
-    
+
     try {
       if (!this.githubUrl || !this.githubToken) {
         return {
           name: 'security-scanner',
           success: false,
           duration: Date.now() - startTime,
-          error: 'GitHub URL or token not provided'
+          error: 'GitHub URL or token not provided',
         };
       }
 
       const scanner = new SecurityScanner({
         githubUrl: this.githubUrl,
-        githubToken: this.githubToken
+        githubToken: this.githubToken,
       });
       const result = await scanner.analyze();
 
@@ -155,14 +155,14 @@ class AIEnablementOrchestrator {
         name: 'security-scanner',
         success: true,
         duration: Date.now() - startTime,
-        data: result
+        data: result,
       };
     } catch (error) {
       return {
         name: 'security-scanner',
         success: false,
         duration: Date.now() - startTime,
-        error: (error as Error).message
+        error: (error as Error).message,
       };
     }
   }
@@ -172,12 +172,12 @@ class AIEnablementOrchestrator {
     security: any
   ): Promise<SkillResult> {
     const startTime = Date.now();
-    
+
     try {
       const scorer = new ReadinessScorer({
         techStack,
         security,
-        orgContext: this.orgContext
+        orgContext: this.orgContext,
       });
       const result = scorer.calculateScores();
 
@@ -185,14 +185,14 @@ class AIEnablementOrchestrator {
         name: 'readiness-scorer',
         success: true,
         duration: Date.now() - startTime,
-        data: result
+        data: result,
       };
     } catch (error) {
       return {
         name: 'readiness-scorer',
         success: false,
         duration: Date.now() - startTime,
-        error: (error as Error).message
+        error: (error as Error).message,
       };
     }
   }
@@ -203,30 +203,33 @@ class AIEnablementOrchestrator {
     readiness: any
   ): Promise<SkillResult> {
     const startTime = Date.now();
-    
+
     try {
       const generator = new ADRGenerator({
         template: this.adrTemplate as any,
         includeEvidence: true,
-        includeRisks: true
+        includeRisks: true,
       });
 
       const assessment = {
         timestamp: new Date().toISOString(),
         repository: this.repoPath,
-        techStack: techStack || { summary: 'Analysis failed', confidence: 'low' },
+        techStack: techStack || {
+          summary: 'Analysis failed',
+          confidence: 'low',
+        },
         githubSecurity: security || { available: false },
         readinessScores: readiness || {
           repo: { score: 0, confidence: 'low', evidence: [] },
           team: { score: 0, confidence: 'low', evidence: [] },
           org: { score: 0, confidence: 'low', evidence: [] },
-          overall: 0
+          overall: 0,
         },
         maturityLayers: {
           current: 'unknown',
-          next: 'foundations'
+          next: 'foundations',
         },
-        recommendations: this.generateFallbackRecommendations(readiness)
+        recommendations: this.generateFallbackRecommendations(readiness),
       };
 
       const adr = generator.generateADR(assessment);
@@ -235,14 +238,14 @@ class AIEnablementOrchestrator {
         name: 'adr-generator',
         success: true,
         duration: Date.now() - startTime,
-        data: adr
+        data: adr,
       };
     } catch (error) {
       return {
         name: 'adr-generator',
         success: false,
         duration: Date.now() - startTime,
-        error: (error as Error).message
+        error: (error as Error).message,
       };
     }
   }
@@ -255,8 +258,9 @@ class AIEnablementOrchestrator {
         priority: 'high',
         category: 'foundations',
         title: 'Improve repository foundations',
-        description: 'Add clear documentation, establish build processes, and enable security scanning',
-        timeframe: '30 days'
+        description:
+          'Add clear documentation, establish build processes, and enable security scanning',
+        timeframe: '30 days',
       });
     }
 
@@ -265,8 +269,9 @@ class AIEnablementOrchestrator {
         priority: 'medium',
         category: 'security',
         title: 'Enable GitHub Advanced Security',
-        description: 'Configure CodeQL, Dependabot, and secret scanning for improved security posture',
-        timeframe: '30 days'
+        description:
+          'Configure CodeQL, Dependabot, and secret scanning for improved security posture',
+        timeframe: '30 days',
       });
     }
 
@@ -274,8 +279,9 @@ class AIEnablementOrchestrator {
       priority: 'low',
       category: 'ai',
       title: 'Add Copilot instructions',
-      description: 'Create copilot-instructions.md to guide AI assistants with repository-specific context',
-      timeframe: '60 days'
+      description:
+        'Create copilot-instructions.md to guide AI assistants with repository-specific context',
+      timeframe: '60 days',
     });
 
     return recommendations;
@@ -298,9 +304,12 @@ class AIEnablementOrchestrator {
 - ADR Generated: ${result.adr ? 'Yes' : 'No'}
 
 Skill Results:
-${result.skills.map(skill => 
-  `- ${skill.name}: ${skill.success ? '✅ Success' : '❌ Failed'} (${skill.duration}ms)`
-).join('\n')}`;
+${result.skills
+  .map(
+    skill =>
+      `- ${skill.name}: ${skill.success ? '✅ Success' : '❌ Failed'} (${skill.duration}ms)`
+  )
+  .join('\n')}`;
   }
 
   // Copilot SDK integration methods (placeholder for future implementation)

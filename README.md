@@ -222,6 +222,7 @@ copilot-enablement-adr/
 ```
 
 **Design Philosophy**
+
 - **Small & Sharp**: Focused implementation without unnecessary abstraction layers
 - **Evidence-Based**: Analysis grounded in concrete detected signals
 - **Skill-First**: Components designed for future orchestration compatibility

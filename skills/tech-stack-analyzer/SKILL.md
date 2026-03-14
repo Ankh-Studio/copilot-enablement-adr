@@ -4,7 +4,7 @@ description: Analyzes repository technology stack using @specfy/stack-analyser t
 license: MIT
 metadata:
   author: Ankh Studio
-  version: "1.0"
+  version: '1.0'
   capabilities: tech-stack-detection filesystem-analysis
 ---
 
@@ -41,7 +41,7 @@ copilot run tech-stack-analyzer --repo ./my-project
 ```json
 {
   "detected": {
-    "languages": {"javascript": 45, "typescript": 32},
+    "languages": { "javascript": 45, "typescript": 32 },
     "techs": ["react", "node", "express", "mongodb"],
     "stack": ["frontend", "backend", "database"]
   },

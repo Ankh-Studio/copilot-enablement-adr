@@ -11,7 +11,7 @@
       "dependencies": []
     },
     {
-      "name": "security-scanner", 
+      "name": "security-scanner",
       "enabled": true,
       "timeout": 45000,
       "retryAttempts": 2,
@@ -30,7 +30,11 @@
       "enabled": true,
       "timeout": 30000,
       "retryAttempts": 1,
-      "dependencies": ["tech-stack-analyzer", "security-scanner", "readiness-scorer"],
+      "dependencies": [
+        "tech-stack-analyzer",
+        "security-scanner",
+        "readiness-scorer"
+      ],
       "options": {
         "template": "consultant",
         "includeEvidence": true,

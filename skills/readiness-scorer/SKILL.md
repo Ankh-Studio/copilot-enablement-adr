@@ -4,7 +4,7 @@ description: Calculates three-dimensional AI enablement readiness scores (Repo, 
 license: MIT
 metadata:
   author: Ankh Studio
-  version: "1.0"
+  version: '1.0'
   capabilities: scoring-algorithms evidence-assessment maturity-evaluation
 ---
 
@@ -33,6 +33,7 @@ copilot run readiness-scorer --tech-stack ./tech-stack.json --security ./securit
 ## Readiness Dimensions
 
 ### Repository Readiness (0-100)
+
 Evaluates technical foundation and repository hygiene:
 
 - **Tech Stack Clarity**: Well-defined and detectable technologies
@@ -42,6 +43,7 @@ Evaluates technical foundation and repository hygiene:
 - **Code Quality**: Linting, formatting, code review processes
 
 ### Team Readiness (0-100)
+
 Assesses team process and capability maturity:
 
 - **Security Practices**: Security review processes and awareness
@@ -51,6 +53,7 @@ Assesses team process and capability maturity:
 - **Learning Culture**: Adoption of new tools and practices
 
 ### Organization Enablement Readiness (0-100)
+
 Measures enterprise and governance readiness:
 
 - **Security Governance**: Advanced Security and compliance frameworks
@@ -70,8 +73,11 @@ Measures enterprise and governance readiness:
   },
   "team": {
     "score": 60,
-    "confidence": "low", 
-    "evidence": ["Security practices in place", "Standard development practices assumed"]
+    "confidence": "low",
+    "evidence": [
+      "Security practices in place",
+      "Standard development practices assumed"
+    ]
   },
   "org": {
     "score": 45,
@@ -85,17 +91,20 @@ Measures enterprise and governance readiness:
 ## Scoring Methodology
 
 ### Evidence-Based Scoring
+
 - Each dimension starts with a base score
 - Evidence increases score and confidence
 - Missing features decrease score
 - Confidence reflects evidence quality
 
 ### Confidence Levels
+
 - **High**: Direct observation and measurement
 - **Medium**: Strong indicators and patterns
 - **Low**: Assumptions and inferences
 
 ### Evidence Categories
+
 - **Direct**: Configured features, observable files
 - **Indirect**: Patterns, dependencies, workflows
 - **Inferred**: Best practices, industry standards
@@ -110,19 +119,22 @@ Measures enterprise and governance readiness:
 ## Assessment Factors
 
 ### Repository Factors
+
 - Tech stack detection confidence: +15 points
 - GitHub Advanced Security features: +10-30 points
 - Documentation completeness: +5-15 points
 - Build/test automation: +10-20 points
 - Code quality tools: +5-10 points
 
-### Team Factors  
+### Team Factors
+
 - Security practices: +15-25 points
 - Tech stack complexity: +5-15 points
 - Process maturity: +10-20 points
 - Collaboration evidence: +5-15 points
 
 ### Organization Factors
+
 - Advanced Security: +20-30 points
 - Public repository culture: +5-10 points
 - Enterprise features: +10-20 points

@@ -4,7 +4,7 @@ description: Metaskill that orchestrates AI enablement assessment by coordinatin
 license: MIT
 metadata:
   author: Ankh Studio
-  version: "1.0"
+  version: '1.0'
   capabilities: skill-orchestration workflow-management copilot-sdk-integration
 ---
 
@@ -34,16 +34,19 @@ copilot run ai-enablement-orchestrator --repo ./my-project --github-url https://
 ## Orchestration Workflow
 
 ### Phase 1: Analysis
+
 1. **Tech Stack Analysis** - Detect technologies and infrastructure
 2. **Security Scanning** - Analyze GitHub Advanced Security features
 3. **Readiness Scoring** - Calculate three-dimensional readiness scores
 
 ### Phase 2: Synthesis
+
 1. **Evidence Aggregation** - Collect and correlate findings
 2. **Risk Assessment** - Identify blockers and mitigation strategies
 3. **Recommendation Generation** - Create actionable improvement plans
 
 ### Phase 3: Documentation
+
 1. **ADR Generation** - Create consultant-quality Architecture Decision Record
 2. **Executive Summary** - High-level overview for stakeholders
 3. **Implementation Roadmap** - Phased action plan with timelines
@@ -51,21 +54,25 @@ copilot run ai-enablement-orchestrator --repo ./my-project --github-url https://
 ## Coordinated Skills
 
 ### Tech Stack Analyzer
+
 - **Purpose**: Comprehensive technology detection
 - **Output**: Technology inventory with confidence levels
 - **Integration**: Provides foundation for security and readiness analysis
 
 ### Security Scanner
+
 - **Purpose**: GitHub Advanced Security analysis
 - **Output**: Security posture assessment
 - **Integration**: Informs readiness scoring and risk assessment
 
 ### Readiness Scorer
+
 - **Purpose**: Three-dimensional readiness evaluation
 - **Output**: Evidence-based readiness scores
 - **Integration**: Drives recommendation generation and ADR content
 
 ### ADR Generator
+
 - **Purpose**: Consultant-quality documentation generation
 - **Output**: Structured ADR with implementation roadmap
 - **Integration**: Final output synthesizing all assessment findings
@@ -112,12 +119,14 @@ The orchestrator uses the GitHub Copilot SDK for:
 ## Export Capabilities
 
 ### Agent Orchestration
+
 - **REST API**: HTTP endpoints for external agent integration
 - **Event Streaming**: Real-time workflow progress updates
 - **Batch Processing**: Bulk repository assessment capabilities
 - **Custom Workflows**: Configurable assessment pipelines
 
 ### Integration Options
+
 - **GitHub Actions**: Native GitHub workflow integration
 - **CI/CD Pipelines**: Automated assessment in development workflows
 - **Documentation Systems**: Confluence, Notion, and wiki integration
@@ -126,12 +135,14 @@ The orchestrator uses the GitHub Copilot SDK for:
 ## Configuration Options
 
 ### Workflow Customization
+
 - **Skill Selection**: Choose specific skills for targeted assessments
 - **Parallel Execution**: Configure skill execution strategy
 - **Timeout Settings**: Adjust per-skill and overall workflow timeouts
 - **Retry Policies**: Configure error handling and retry strategies
 
 ### Output Customization
+
 - **ADR Templates**: Custom ADR sections and formatting
 - **Report Formats**: JSON, Markdown, HTML, PDF output options
 - **Data Export**: Structured data for integration with other tools

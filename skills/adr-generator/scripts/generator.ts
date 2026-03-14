@@ -66,7 +66,7 @@ class ADRGenerator {
 
   private generateBaseADR(assessment: Assessment): string {
     const date = new Date(assessment.timestamp).toLocaleDateString();
-    
+
     return `# ADR: AI Enablement Assessment
 
 ## Status
@@ -103,8 +103,12 @@ ${assessment.techStack.summary}
   }
 
   private generateConsultantSections(assessment: Assessment): string {
-    const recommendations = this.formatRecommendations(assessment.recommendations);
-    const evidence = this.includeEvidence ? this.generateEvidenceSection(assessment) : '';
+    const recommendations = this.formatRecommendations(
+      assessment.recommendations
+    );
+    const evidence = this.includeEvidence
+      ? this.generateEvidenceSection(assessment)
+      : '';
     const risks = this.includeRisks ? this.generateRiskSection(assessment) : '';
 
     return `## Recommendations
@@ -236,70 +240,84 @@ ${risks.low.map((risk: string) => `- **${risk}**`).join('\n')}
   }
 
   private generateCustomSections(assessment: Assessment): string {
-    return this.customSections.map(section => {
-      switch (section) {
-        case 'compliance':
-          return this.generateComplianceSection(assessment);
-        case 'budget':
-          return this.generateBudgetSection(assessment);
-        case 'timeline':
-          return this.generateDetailedTimeline(assessment);
-        default:
-          return `## ${section}\n\nCustom section content for ${section}`;
-      }
-    }).join('\n\n');
+    return this.customSections
+      .map(section => {
+        switch (section) {
+          case 'compliance':
+            return this.generateComplianceSection(assessment);
+          case 'budget':
+            return this.generateBudgetSection(assessment);
+          case 'timeline':
+            return this.generateDetailedTimeline(assessment);
+          default:
+            return `## ${section}\n\nCustom section content for ${section}`;
+        }
+      })
+      .join('\n\n');
   }
 
-  private formatRecommendations(recommendations: Assessment['recommendations']): string {
+  private formatRecommendations(
+    recommendations: Assessment['recommendations']
+  ): string {
     return recommendations
       .map(rec => `- **${rec.title}** (${rec.timeframe}): ${rec.description}`)
       .join('\n');
   }
 
-  private getShortTermRecommendations(recommendations: Assessment['recommendations']): string {
+  private getShortTermRecommendations(
+    recommendations: Assessment['recommendations']
+  ): string {
     return recommendations
       .filter(rec => rec.timeframe === '30 days')
       .map(rec => `- ${rec.title}: ${rec.description}`)
       .join('\n');
   }
 
-  private getMediumTermRecommendations(recommendations: Assessment['recommendations']): string {
+  private getMediumTermRecommendations(
+    recommendations: Assessment['recommendations']
+  ): string {
     return recommendations
       .filter(rec => rec.timeframe === '60 days')
       .map(rec => `- ${rec.title}: ${rec.description}`)
       .join('\n');
   }
 
-  private getLongTermRecommendations(recommendations: Assessment['recommendations']): string {
+  private getLongTermRecommendations(
+    recommendations: Assessment['recommendations']
+  ): string {
     return recommendations
       .filter(rec => rec.timeframe === '90 days')
       .map(rec => `- ${rec.title}: ${rec.description}`)
       .join('\n');
   }
 
-  private identifyRisks(_assessment: Assessment): { high: string[], medium: string[], low: string[] } {
+  private identifyRisks(_assessment: Assessment): {
+    high: string[];
+    medium: string[];
+    low: string[];
+  } {
     return {
       high: [
         'Insufficient security practices may expose sensitive data',
         'Team resistance to AI adoption could impact productivity',
-        'Inadequate documentation may hinder AI assistance effectiveness'
+        'Inadequate documentation may hinder AI assistance effectiveness',
       ],
       medium: [
         'Integration challenges with existing development workflows',
         'Learning curve for new tools and processes',
-        'Potential increase in initial development time'
+        'Potential increase in initial development time',
       ],
       low: [
         'Tool licensing and subscription costs',
         'Maintenance overhead for new systems',
-        'Potential dependency on AI assistance'
-      ]
+        'Potential dependency on AI assistance',
+      ],
     };
   }
 
   private assessBusinessImpact(assessment: Assessment): string {
     const overallScore = assessment.readinessScores.overall;
-    
+
     if (overallScore >= 70) {
       return 'Repository demonstrates strong readiness for AI enablement with immediate potential for productivity gains and quality improvements.';
     } else if (overallScore >= 50) {
@@ -311,7 +329,7 @@ ${risks.low.map((risk: string) => `- **${risk}**`).join('\n')}
 
   private estimateResourceRequirements(assessment: Assessment): string {
     const overallScore = assessment.readinessScores.overall;
-    
+
     if (overallScore >= 70) {
       return '- **Time**: 30-60 days for full implementation\n- **Budget**: Minimal - primarily tool licensing\n- **Personnel**: 1-2 team members part-time\n- **Training**: Basic tool adoption training';
     } else if (overallScore >= 50) {
@@ -382,15 +400,19 @@ ${risks.low.map((risk: string) => `- **${risk}**`).join('\n')}
   }
 
   generateJSON(assessment: Assessment): string {
-    return JSON.stringify({
-      metadata: {
-        generated: new Date().toISOString(),
-        template: this.template,
-        version: '1.0'
+    return JSON.stringify(
+      {
+        metadata: {
+          generated: new Date().toISOString(),
+          template: this.template,
+          version: '1.0',
+        },
+        assessment,
+        adr: this.generateADR(assessment),
       },
-      assessment,
-      adr: this.generateADR(assessment)
-    }, null, 2);
+      null,
+      2
+    );
   }
 }
 

@@ -4,7 +4,7 @@ description: Analyzes GitHub Advanced Security features including CodeQL scannin
 license: MIT
 metadata:
   author: Ankh Studio
-  version: "1.0"
+  version: '1.0'
   capabilities: github-api security-analysis compliance-checking
 ---
 
@@ -33,24 +33,28 @@ copilot run security-scanner --repo https://github.com/owner/repo --token $GITHU
 ## Security Analysis Components
 
 ### CodeQL Analysis
+
 - Scanning setup and configuration status
 - Open alerts and their severity
 - Last analysis timestamp
 - Query pack coverage
 
 ### Dependabot Analysis
+
 - Alert status and counts
 - Dependency review configuration
 - Version updates coverage
 - Security vulnerability tracking
 
 ### Secret Scanning Analysis
+
 - Alert configuration and status
 - Push protection settings
 - Custom patterns (if configured)
 - Historical alert trends
 
 ### Security Overview
+
 - Advanced Security feature enablement
 - Repository visibility and access controls
 - Security policy documentation

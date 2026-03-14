@@ -66,7 +66,8 @@ class SecurityScanner {
 
       return {
         available: true,
-        hasSecurityFeatures: !!codeql.enabled || !!dependabot.enabled || !!secretScanning.enabled,
+        hasSecurityFeatures:
+          !!codeql.enabled || !!dependabot.enabled || !!secretScanning.enabled,
         securityOverview,
       };
     } catch (error) {
@@ -87,7 +88,10 @@ class SecurityScanner {
     return [match[1], match[2]];
   }
 
-  private async getCodeQLStatus(owner: string, repo: string): Promise<CodeQLAnalysis> {
+  private async getCodeQLStatus(
+    owner: string,
+    repo: string
+  ): Promise<CodeQLAnalysis> {
     try {
       const { data } = await this.octokit.rest.codeScanning.listAlertsForRepo({
         owner,
@@ -101,16 +105,19 @@ class SecurityScanner {
         lastAnalysis: new Date().toISOString(),
       };
     } catch (error) {
-      return { 
-        enabled: false, 
+      return {
+        enabled: false,
         reason: (error as Error).message,
         openAlerts: 0,
-        lastAnalysis: ''
+        lastAnalysis: '',
       };
     }
   }
 
-  private async getDependabotStatus(_owner: string, _repo: string): Promise<DependabotAnalysis> {
+  private async getDependabotStatus(
+    _owner: string,
+    _repo: string
+  ): Promise<DependabotAnalysis> {
     try {
       // Note: Dependabot alerts API may not be available in this version
       // Using a placeholder implementation
@@ -119,19 +126,22 @@ class SecurityScanner {
         reason:
           'Dependabot alerts API not available in current Octokit version',
         dependencyReview: false,
-        openAlerts: 0
+        openAlerts: 0,
       };
     } catch (error) {
-      return { 
-        enabled: false, 
+      return {
+        enabled: false,
         reason: (error as Error).message,
         openAlerts: 0,
-        dependencyReview: false
+        dependencyReview: false,
       };
     }
   }
 
-  private async getSecretScanningStatus(owner: string, repo: string): Promise<SecretScanningAnalysis> {
+  private async getSecretScanningStatus(
+    owner: string,
+    repo: string
+  ): Promise<SecretScanningAnalysis> {
     try {
       const { data } = await this.octokit.rest.secretScanning.listAlertsForRepo(
         {
@@ -147,16 +157,19 @@ class SecurityScanner {
         pushProtection: true,
       };
     } catch (error) {
-      return { 
-        enabled: false, 
+      return {
+        enabled: false,
         reason: (error as Error).message,
         openAlerts: 0,
-        pushProtection: false
+        pushProtection: false,
       };
     }
   }
 
-  private async getSecurityOverview(owner: string, repo: string): Promise<SecurityOverview> {
+  private async getSecurityOverview(
+    owner: string,
+    repo: string
+  ): Promise<SecurityOverview> {
     try {
       const { data } = await this.octokit.rest.repos.get({
         owner,
@@ -165,22 +178,23 @@ class SecurityScanner {
 
       return {
         isPrivate: data.private,
-        hasSecurityFeatures: !!(data.security_and_analysis?.advanced_security),
-        vulnerabilityAlerts: !!(data.security_and_analysis?.dependabot_security_updates),
+        hasSecurityFeatures: !!data.security_and_analysis?.advanced_security,
+        vulnerabilityAlerts:
+          !!data.security_and_analysis?.dependabot_security_updates,
       };
     } catch (error) {
-      return { 
+      return {
         error: (error as Error).message,
         isPrivate: false,
         hasSecurityFeatures: false,
-        vulnerabilityAlerts: false
+        vulnerabilityAlerts: false,
       };
     }
   }
 
   async getSecurityPosture(): Promise<string> {
     const analysis = await this.analyze();
-    
+
     if (!analysis.available) {
       return 'Security analysis unavailable - insufficient permissions or repository not found';
     }
@@ -194,14 +208,16 @@ class SecurityScanner {
     if (analysis.dependabot?.enabled) enabledFeatures.push('Dependabot');
     else disabledFeatures.push('Dependabot');
 
-    if (analysis.secretScanning?.enabled) enabledFeatures.push('Secret Scanning');
+    if (analysis.secretScanning?.enabled)
+      enabledFeatures.push('Secret Scanning');
     else disabledFeatures.push('Secret Scanning');
 
-    if (analysis.securityOverview?.hasSecurityFeatures) enabledFeatures.push('Advanced Security');
+    if (analysis.securityOverview?.hasSecurityFeatures)
+      enabledFeatures.push('Advanced Security');
     else disabledFeatures.push('Advanced Security');
 
     const score = (enabledFeatures.length / 4) * 100;
-    
+
     return `Security Posture: ${score}/100. Enabled: ${enabledFeatures.join(', ')}. Missing: ${disabledFeatures.join(', ')}`;
   }
 }

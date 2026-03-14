@@ -8,13 +8,7 @@
     "copilot": ">=1.0.0"
   },
   "categories": ["Analysis", "Documentation", "AI"],
-  "keywords": [
-    "ai",
-    "enablement",
-    "adr",
-    "assessment",
-    "copilot-sdk"
-  ],
+  "keywords": ["ai", "enablement", "adr", "assessment", "copilot-sdk"],
   "main": "./index.js",
   "dependencies": {
     "@specfy/stack-analyser": "^1.27.6",

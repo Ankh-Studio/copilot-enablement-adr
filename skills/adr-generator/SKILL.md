@@ -4,7 +4,7 @@ description: Generates consultant-quality Architecture Decision Records (ADRs) w
 license: MIT
 metadata:
   author: Ankh Studio
-  version: "1.0"
+  version: '1.0'
   capabilities: document-generation template-processing risk-assessment
 ---
 
@@ -28,7 +28,7 @@ copilot run adr-generator --assessment ./assessment.json --template consultant
 ## Outputs
 
 - **Primary**: Markdown ADR with structured sections
-- **Secondary: JSON ADR for programmatic use
+- \*\*Secondary: JSON ADR for programmatic use
 - **Metadata**: Template version and generation timestamp
 
 ## ADR Structure
@@ -53,18 +53,21 @@ copilot run adr-generator --assessment ./assessment.json --template consultant
 ## Template Styles
 
 ### Consultant Template
+
 - Executive summary and business impact
 - Detailed risk assessment with mitigation strategies
 - Comprehensive implementation roadmap
 - ROI analysis and success metrics
 
 ### Technical Template
+
 - Implementation details and code examples
 - Integration patterns and best practices
 - Performance considerations and monitoring
 - Security and compliance requirements
 
 ### Executive Template
+
 - High-level strategic overview
 - Business case and value proposition
 - Resource requirements and budget estimates
@@ -76,37 +79,46 @@ copilot run adr-generator --assessment ./assessment.json --template consultant
 # ADR: AI Enablement Assessment
 
 ## Status
+
 **Draft** - Assessment completed on January 15, 2024
 
 ## Repository Analyzed
+
 `./my-project`
 
 ## Readiness Scores
+
 - **Repo Readiness**: 75/100 (medium confidence)
 - **Team Readiness**: 60/100 (low confidence)
 - **Org Enablement**: 45/100 (low confidence)
 - **Overall**: 60/100
 
 ## Current Maturity Layer
+
 **Current**: foundations
 **Next Target**: build-test
 
 ## Recommendations
+
 - **Improve repository foundations** (30 days): Add clear documentation, establish build processes, and enable security scanning
 - **Enable GitHub Advanced Security** (30 days): Configure CodeQL, Dependabot, and secret scanning for improved security posture
 - **Add Copilot instructions** (60 days): Create copilot-instructions.md to guide AI assistants with repository-specific context
 
 ## Evidence
+
 ### Repository Readiness
+
 - Clear tech stack detected
 - CodeQL scanning enabled
 - Documentation structure assessed
 
 ### Team Readiness
+
 - Security practices in place
 - Standard development practices assumed
 
 ### Org Enablement
+
 - Basic organizational structure assumed
 ```
 

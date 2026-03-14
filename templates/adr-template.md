@@ -8,6 +8,45 @@
 
 `{{REPOSITORY_PATH}}` - Analyzed on {{DATE}}
 
+## Justification for AI Enablement Proposal
+
+This assessment was conducted to evaluate the repository's readiness for AI enablement and identify specific opportunities for productivity improvements through AI assistance.
+
+### Tech Stack Examination
+
+**What We Found:**
+{{TECH_STACK_EXAMINATION}}
+
+**AI Enablement Implications:**
+{{TECH_STACK_AI_IMPLICATIONS}}
+
+### Current Copilot Adoption Analysis
+
+**What We Found:**
+{{COPILOT_ADOPTION_ANALYSIS}}
+
+**Current State Assessment:**
+{{COPILOT_CURRENT_STATE}}
+
+### Testing Coverage Examination
+
+**What We Found:**
+{{TESTING_COVERAGE_ANALYSIS}}
+
+**AI-Enhanced Testing Opportunities:**
+{{TESTING_AI_OPPORTUNITIES}}
+
+### Business Case Summary
+
+**Productivity Gains Identified:**
+{{PRODUCTIVITY_GAINS}}
+
+**Investment Required:**
+{{INVESTMENT_REQUIRED}}
+
+**Expected ROI:**
+{{EXPECTED_ROI}}
+
 ## Inferred Product/Service Purpose
 
 {{INFERRED_PURPOSE}} ({{CONFIDENCE_LEVEL}} confidence)

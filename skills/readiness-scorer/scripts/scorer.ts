@@ -221,22 +221,30 @@ class ReadinessScorer {
 
     // Repository-level recommendations
     if (scores.repo.score < 70) {
-      recommendations.push('Improve repository foundations: add clear documentation, establish build processes, and enable security scanning');
+      recommendations.push(
+        'Improve repository foundations: add clear documentation, establish build processes, and enable security scanning'
+      );
     }
 
     // Security recommendations
     if (!this.security?.available) {
-      recommendations.push('Enable GitHub Advanced Security: configure CodeQL, Dependabot, and secret scanning for improved security posture');
+      recommendations.push(
+        'Enable GitHub Advanced Security: configure CodeQL, Dependabot, and secret scanning for improved security posture'
+      );
     }
 
     // Team recommendations
     if (scores.team.score < 60) {
-      recommendations.push('Establish evaluation loops: implement code review processes and quality gates for better team maturity');
+      recommendations.push(
+        'Establish evaluation loops: implement code review processes and quality gates for better team maturity'
+      );
     }
 
     // Organization recommendations
     if (scores.org.score < 50) {
-      recommendations.push('Develop organizational enablement: create policies, allocate resources, and establish governance frameworks');
+      recommendations.push(
+        'Develop organizational enablement: create policies, allocate resources, and establish governance frameworks'
+      );
     }
 
     return recommendations;
@@ -245,7 +253,8 @@ class ReadinessScorer {
   getReadinessLevel(scores: ReadinessScores): string {
     if (scores.overall >= 80) return 'Advanced - Ready for orchestration';
     if (scores.overall >= 60) return 'Intermediate - Ready for AI assistance';
-    if (scores.overall >= 40) return 'Developing - Basic AI enablement possible';
+    if (scores.overall >= 40)
+      return 'Developing - Basic AI enablement possible';
     return 'Foundational - Requires significant preparation';
   }
 }
