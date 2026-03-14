@@ -1,0 +1,63 @@
+{
+  "name": "ai-enablement-assessment",
+  "version": "1.0",
+  "description": "Default workflow for comprehensive AI enablement assessment",
+  "skills": [
+    {
+      "name": "tech-stack-analyzer",
+      "enabled": true,
+      "timeout": 30000,
+      "retryAttempts": 2,
+      "dependencies": []
+    },
+    {
+      "name": "security-scanner", 
+      "enabled": true,
+      "timeout": 45000,
+      "retryAttempts": 2,
+      "dependencies": [],
+      "requiredInputs": ["githubUrl", "githubToken"]
+    },
+    {
+      "name": "readiness-scorer",
+      "enabled": true,
+      "timeout": 20000,
+      "retryAttempts": 1,
+      "dependencies": ["tech-stack-analyzer", "security-scanner"]
+    },
+    {
+      "name": "adr-generator",
+      "enabled": true,
+      "timeout": 30000,
+      "retryAttempts": 1,
+      "dependencies": ["tech-stack-analyzer", "security-scanner", "readiness-scorer"],
+      "options": {
+        "template": "consultant",
+        "includeEvidence": true,
+        "includeRisks": true
+      }
+    }
+  ],
+  "executionStrategy": {
+    "parallelExecution": true,
+    "maxConcurrentSkills": 2,
+    "failFast": false,
+    "continueOnError": true
+  },
+  "outputs": {
+    "formats": ["markdown", "json"],
+    "includeSkillOutputs": true,
+    "generateSummary": true,
+    "saveToFiles": true
+  },
+  "notifications": {
+    "enabled": false,
+    "webhooks": [],
+    "email": []
+  },
+  "export": {
+    "enabled": false,
+    "endpoints": [],
+    "format": "json"
+  }
+}

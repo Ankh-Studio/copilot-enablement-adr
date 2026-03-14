@@ -16,14 +16,38 @@
     "readiness",
     "orchestration"
   ],
-  "main": "./skills/ai-enablement-assessment/SKILL.md",
+  "main": "./skills/ai-enablement-orchestrator/SKILL.md",
   "contributes": {
     "skills": [
       {
-        "id": "ai-enablement-assessment",
-        "name": "AI Enablement Assessment",
-        "description": "Generate comprehensive AI enablement assessment with consultant-quality ADR",
-        "entry": "./skills/ai-enablement-assessment/SKILL.md"
+        "id": "ai-enablement-orchestrator",
+        "name": "AI Enablement Orchestrator",
+        "description": "Metaskill that orchestrates comprehensive AI enablement assessment with consultant-quality ADR",
+        "entry": "./skills/ai-enablement-orchestrator/SKILL.md"
+      },
+      {
+        "id": "tech-stack-analyzer",
+        "name": "Tech Stack Analyzer",
+        "description": "Analyzes repository technology stack and infrastructure",
+        "entry": "./skills/tech-stack-analyzer/SKILL.md"
+      },
+      {
+        "id": "security-scanner", 
+        "name": "Security Scanner",
+        "description": "Analyzes GitHub Advanced Security features and posture",
+        "entry": "./skills/security-scanner/SKILL.md"
+      },
+      {
+        "id": "readiness-scorer",
+        "name": "Readiness Scorer", 
+        "description": "Calculates evidence-based readiness scores across repo, team, and org dimensions",
+        "entry": "./skills/readiness-scorer/SKILL.md"
+      },
+      {
+        "id": "adr-generator",
+        "name": "ADR Generator",
+        "description": "Generates consultant-quality Architecture Decision Records",
+        "entry": "./skills/adr-generator/SKILL.md"
       }
     ]
   },
