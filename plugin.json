@@ -1,0 +1,41 @@
+{
+  "name": "ankh-copilot-enablement-adr",
+  "displayName": "Ankh Copilot Enablement ADR",
+  "description": "Analyzes repository AI enablement readiness and generates consultant-quality ADR proposals",
+  "version": "1.0.0",
+  "publisher": "AnkhStudio",
+  "engines": {
+    "copilot": ">=1.0.0"
+  },
+  "categories": ["Analysis", "Documentation", "AI"],
+  "keywords": [
+    "ai",
+    "enablement",
+    "adr",
+    "assessment",
+    "readiness",
+    "orchestration"
+  ],
+  "main": "./skills/ai-enablement-assessment/SKILL.md",
+  "contributes": {
+    "skills": [
+      {
+        "id": "ai-enablement-assessment",
+        "name": "AI Enablement Assessment",
+        "description": "Generate comprehensive AI enablement assessment with consultant-quality ADR",
+        "entry": "./skills/ai-enablement-assessment/SKILL.md"
+      }
+    ]
+  },
+  "dependencies": {
+    "@specfy/stack-analyser": "^0.3.0",
+    "@octokit/rest": "^20.0.0"
+  },
+  "capabilities": [
+    "filesystem",
+    "github-api",
+    "llm-inference",
+    "tech-stack-detection",
+    "security-analysis"
+  ]
+}

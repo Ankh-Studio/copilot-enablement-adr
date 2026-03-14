@@ -1,0 +1,46 @@
+{
+  "name": "@ankh-studio/copilot-enablement-adr",
+  "version": "1.0.0",
+  "description": "GitHub Copilot CLI plugin that analyzes repository AI enablement readiness and generates consultant-quality ADR proposals",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "bundle": "esbuild dist/index.js --bundle --platform=node --outfile=dist/bundle.js --format=cjs --external:@specfy/stack-analyser --external:@octokit/rest",
+    "format": "prettier --write \"**/*.{js,ts,json,md,yml,yaml}\"",
+    "lint": "prettier --check \"**/*.{js,ts,json,md,yml,yaml}\"",
+    "lint:ts": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build && npm run bundle"
+  },
+  "keywords": [
+    "copilot",
+    "ai",
+    "enablement",
+    "adr",
+    "assessment",
+    "github"
+  ],
+  "author": "Ankh Studio",
+  "license": "MIT",
+  "dependencies": {
+    "@specfy/stack-analyser": "^1.27.6",
+    "@octokit/rest": "^20.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "esbuild": "^0.20.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ankh-Studio/copilot-enablement-adr.git"
+  },
+  "homepage": "https://github.com/Ankh-Studio/copilot-enablement-adr#readme"
+}

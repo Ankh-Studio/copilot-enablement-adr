@@ -1,0 +1,535 @@
+{
+  "readinessDimensions": {
+    "repo": {
+      "name": "Repo Readiness",
+      "description": "Technical foundation and repository hygiene",
+      "maxScore": 100,
+      "criteria": {
+        "techStackClarity": {
+          "weight": 15,
+          "description": "Clear tech stack detection and documentation",
+          "levels": {
+            "high": {
+              "score": 15,
+              "description": "Tech stack clearly detected and documented"
+            },
+            "medium": {
+              "score": 10,
+              "description": "Tech stack partially detected"
+            },
+            "low": {
+              "score": 5,
+              "description": "Tech stack unclear or ambiguous"
+            },
+            "none": { "score": 0, "description": "No tech stack information" }
+          }
+        },
+        "documentationQuality": {
+          "weight": 15,
+          "description": "Quality and completeness of documentation",
+          "levels": {
+            "excellent": {
+              "score": 15,
+              "description": "Comprehensive docs with examples and guides"
+            },
+            "good": {
+              "score": 12,
+              "description": "Good documentation with basic examples"
+            },
+            "basic": { "score": 8, "description": "Basic README and API docs" },
+            "minimal": { "score": 4, "description": "Minimal documentation" },
+            "none": { "score": 0, "description": "No documentation" }
+          }
+        },
+        "buildTestAutomation": {
+          "weight": 15,
+          "description": "Build and test automation coverage",
+          "levels": {
+            "comprehensive": {
+              "score": 15,
+              "description": "Full CI/CD with comprehensive testing"
+            },
+            "good": { "score": 12, "description": "CI/CD with basic testing" },
+            "basic": { "score": 8, "description": "Build automation only" },
+            "minimal": { "score": 4, "description": "Basic build scripts" },
+            "none": { "score": 0, "description": "No automation" }
+          }
+        },
+        "codeQuality": {
+          "weight": 10,
+          "description": "Code quality tools and standards",
+          "levels": {
+            "excellent": {
+              "score": 10,
+              "description": "Linting, formatting, type checking, static analysis"
+            },
+            "good": { "score": 8, "description": "Linting and formatting" },
+            "basic": { "score": 5, "description": "Basic linting" },
+            "minimal": { "score": 2, "description": "Minimal quality tools" },
+            "none": { "score": 0, "description": "No code quality tools" }
+          }
+        },
+        "securitySetup": {
+          "weight": 20,
+          "description": "Security scanning and vulnerability management",
+          "levels": {
+            "comprehensive": {
+              "score": 20,
+              "description": "CodeQL, Dependabot, secret scanning, dependency review"
+            },
+            "good": { "score": 15, "description": "CodeQL and Dependabot" },
+            "basic": { "score": 10, "description": "Basic security scanning" },
+            "minimal": {
+              "score": 5,
+              "description": "Basic vulnerability checks"
+            },
+            "none": { "score": 0, "description": "No security setup" }
+          }
+        },
+        "aiGuidance": {
+          "weight": 15,
+          "description": "AI-specific guidance and instructions",
+          "levels": {
+            "comprehensive": {
+              "score": 15,
+              "description": "Copilot instructions, AI guidelines, examples"
+            },
+            "good": {
+              "score": 12,
+              "description": "Copilot instructions and basic guidelines"
+            },
+            "basic": {
+              "score": 8,
+              "description": "Basic Copilot instructions"
+            },
+            "minimal": { "score": 4, "description": "Minimal AI guidance" },
+            "none": { "score": 0, "description": "No AI guidance" }
+          }
+        },
+        "repositoryStructure": {
+          "weight": 10,
+          "description": "Clear and logical repository organization",
+          "levels": {
+            "excellent": {
+              "score": 10,
+              "description": "Well-organized with clear separation of concerns"
+            },
+            "good": {
+              "score": 8,
+              "description": "Logical structure with good organization"
+            },
+            "basic": { "score": 5, "description": "Basic organization" },
+            "minimal": { "score": 2, "description": "Minimal structure" },
+            "none": { "score": 0, "description": "Poor organization" }
+          }
+        }
+      }
+    },
+    "team": {
+      "name": "Team Readiness",
+      "description": "Process maturity and team capabilities",
+      "maxScore": 100,
+      "criteria": {
+        "codeReviewProcess": {
+          "weight": 20,
+          "description": "Formal code review processes and coverage",
+          "levels": {
+            "excellent": {
+              "score": 20,
+              "description": "Formal reviews with >90% coverage and quality gates"
+            },
+            "good": {
+              "score": 15,
+              "description": "Formal reviews with good coverage"
+            },
+            "basic": {
+              "score": 10,
+              "description": "Informal reviews with partial coverage"
+            },
+            "minimal": { "score": 5, "description": "Basic review process" },
+            "none": { "score": 0, "description": "No code review process" }
+          }
+        },
+        "testingMaturity": {
+          "weight": 20,
+          "description": "Testing strategy and coverage",
+          "levels": {
+            "comprehensive": {
+              "score": 20,
+              "description": "Unit, integration, E2E tests with >80% coverage"
+            },
+            "good": {
+              "score": 15,
+              "description": "Unit and integration tests with good coverage"
+            },
+            "basic": {
+              "score": 10,
+              "description": "Unit tests with basic coverage"
+            },
+            "minimal": { "score": 5, "description": "Minimal testing" },
+            "none": { "score": 0, "description": "No testing" }
+          }
+        },
+        "developmentPractices": {
+          "weight": 15,
+          "description": "Modern development practices and standards",
+          "levels": {
+            "excellent": {
+              "score": 15,
+              "description": "Modern practices with continuous improvement"
+            },
+            "good": {
+              "score": 12,
+              "description": "Good development practices"
+            },
+            "basic": {
+              "score": 8,
+              "description": "Basic development practices"
+            },
+            "minimal": { "score": 4, "description": "Minimal practices" },
+            "none": { "score": 0, "description": "Poor development practices" }
+          }
+        },
+        "collaborationTools": {
+          "weight": 15,
+          "description": "Team collaboration and communication tools",
+          "levels": {
+            "excellent": {
+              "score": 15,
+              "description": "Comprehensive tooling with good integration"
+            },
+            "good": { "score": 12, "description": "Good collaboration tools" },
+            "basic": { "score": 8, "description": "Basic collaboration tools" },
+            "minimal": { "score": 4, "description": "Minimal tooling" },
+            "none": { "score": 0, "description": "Poor collaboration setup" }
+          }
+        },
+        "skillLevel": {
+          "weight": 15,
+          "description": "Team technical skills and AI readiness",
+          "levels": {
+            "expert": {
+              "score": 15,
+              "description": "Expert team with AI experience"
+            },
+            "advanced": {
+              "score": 12,
+              "description": "Advanced team with some AI experience"
+            },
+            "intermediate": {
+              "score": 8,
+              "description": "Intermediate team learning AI"
+            },
+            "beginner": {
+              "score": 4,
+              "description": "Beginner team new to AI"
+            },
+            "unknown": { "score": 0, "description": "Unknown skill level" }
+          }
+        },
+        "processMaturity": {
+          "weight": 15,
+          "description": "Development process maturity and consistency",
+          "levels": {
+            "mature": {
+              "score": 15,
+              "description": "Mature processes with continuous improvement"
+            },
+            "developing": {
+              "score": 12,
+              "description": "Developing processes with good consistency"
+            },
+            "basic": {
+              "score": 8,
+              "description": "Basic processes with some consistency"
+            },
+            "minimal": { "score": 4, "description": "Minimal processes" },
+            "none": { "score": 0, "description": "No formal processes" }
+          }
+        }
+      }
+    },
+    "org": {
+      "name": "Org Enablement Readiness",
+      "description": "Enterprise and governance readiness",
+      "maxScore": 100,
+      "criteria": {
+        "securityGovernance": {
+          "weight": 25,
+          "description": "Security policies and governance framework",
+          "levels": {
+            "comprehensive": {
+              "score": 25,
+              "description": "Comprehensive security governance with policies"
+            },
+            "good": {
+              "score": 20,
+              "description": "Good security policies and governance"
+            },
+            "basic": { "score": 15, "description": "Basic security policies" },
+            "minimal": {
+              "score": 10,
+              "description": "Minimal security governance"
+            },
+            "none": { "score": 0, "description": "No security governance" }
+          }
+        },
+        "aiGovernance": {
+          "weight": 25,
+          "description": "AI usage policies and governance framework",
+          "levels": {
+            "comprehensive": {
+              "score": 25,
+              "description": "Comprehensive AI governance with policies"
+            },
+            "good": {
+              "score": 20,
+              "description": "Good AI policies and governance"
+            },
+            "basic": { "score": 15, "description": "Basic AI policies" },
+            "minimal": { "score": 10, "description": "Minimal AI governance" },
+            "none": { "score": 0, "description": "No AI governance" }
+          }
+        },
+        "enterpriseTools": {
+          "weight": 20,
+          "description": "Enterprise tooling and infrastructure support",
+          "levels": {
+            "comprehensive": {
+              "score": 20,
+              "description": "Comprehensive enterprise tooling"
+            },
+            "good": { "score": 15, "description": "Good enterprise tools" },
+            "basic": { "score": 10, "description": "Basic enterprise tools" },
+            "minimal": {
+              "score": 5,
+              "description": "Minimal enterprise support"
+            },
+            "none": { "score": 0, "description": "No enterprise tools" }
+          }
+        },
+        "complianceFramework": {
+          "weight": 15,
+          "description": "Compliance and regulatory framework",
+          "levels": {
+            "comprehensive": {
+              "score": 15,
+              "description": "Comprehensive compliance framework"
+            },
+            "good": { "score": 12, "description": "Good compliance processes" },
+            "basic": {
+              "score": 8,
+              "description": "Basic compliance awareness"
+            },
+            "minimal": { "score": 4, "description": "Minimal compliance" },
+            "none": { "score": 0, "description": "No compliance framework" }
+          }
+        },
+        "innovationCulture": {
+          "weight": 15,
+          "description": "Organizational culture of innovation and learning",
+          "levels": {
+            "innovative": {
+              "score": 15,
+              "description": "Strong innovation culture with AI adoption"
+            },
+            "learning": {
+              "score": 12,
+              "description": "Good learning culture with AI interest"
+            },
+            "developing": {
+              "score": 8,
+              "description": "Developing innovation culture"
+            },
+            "traditional": {
+              "score": 4,
+              "description": "Traditional culture resistant to change"
+            },
+            "unknown": { "score": 0, "description": "Unknown culture" }
+          }
+        }
+      }
+    }
+  },
+  "maturityLayers": {
+    "foundations": {
+      "name": "Foundations",
+      "description": "Basic repo clarity and structure",
+      "indicators": [
+        "Clear README with project description",
+        "Logical directory structure",
+        "Basic documentation",
+        "Clear tech stack identification"
+      ],
+      "blockers": [
+        "No clear project description",
+        "Chaotic directory structure",
+        "No documentation",
+        "Unclear tech stack"
+      ]
+    },
+    "buildTest": {
+      "name": "Build & Test Determinism",
+      "description": "Reproducible development workflows",
+      "indicators": [
+        "Automated build process",
+        "Automated testing",
+        "CI/CD pipeline",
+        "Reproducible environments"
+      ],
+      "blockers": [
+        "No build automation",
+        "No automated testing",
+        "Manual deployment",
+        "Inconsistent environments"
+      ]
+    },
+    "documentation": {
+      "name": "Documentation Spec Maturity",
+      "description": "Adequate context for AI & human understanding",
+      "indicators": [
+        "Comprehensive API documentation",
+        "Development guides",
+        "Architecture documentation",
+        "Examples and tutorials"
+      ],
+      "blockers": [
+        "Minimal documentation",
+        "No API docs",
+        "No development guides",
+        "No examples"
+      ]
+    },
+    "repoAware": {
+      "name": "Repo-Aware AI Guidance",
+      "description": "Copilot instructions and conventions",
+      "indicators": [
+        "Copilot instructions file",
+        "AI development guidelines",
+        "Repository-specific AI context",
+        "Code conventions documented"
+      ],
+      "blockers": [
+        "No Copilot instructions",
+        "No AI guidelines",
+        "No repository context",
+        "Unclear conventions"
+      ]
+    },
+    "evaluation": {
+      "name": "Evaluation & Verification Loops",
+      "description": "Quality gates and review processes",
+      "indicators": [
+        "Code review process",
+        "Quality gates",
+        "Automated checks",
+        "Verification workflows"
+      ],
+      "blockers": [
+        "No code review",
+        "No quality gates",
+        "Manual verification",
+        "No feedback loops"
+      ]
+    },
+    "tools": {
+      "name": "Tool Augmentation",
+      "description": "MCP servers, custom agents, skills",
+      "indicators": [
+        "MCP server integration",
+        "Custom AI agents",
+        "Repository-specific skills",
+        "Tool automation"
+      ],
+      "blockers": [
+        "No MCP servers",
+        "No custom agents",
+        "No specialized tools",
+        "Manual workflows only"
+      ]
+    },
+    "memory": {
+      "name": "Memory & Artifact Continuity",
+      "description": "ADRs, specs, decision logs, reusable prompts",
+      "indicators": [
+        "ADR process",
+        "Decision documentation",
+        "Reusable prompts",
+        "Knowledge artifacts"
+      ],
+      "blockers": [
+        "No ADR process",
+        "No decision documentation",
+        "No knowledge management",
+        "Lost context"
+      ]
+    },
+    "orchestration": {
+      "name": "Safe Orchestration Autonomy",
+      "description": "Guardrails, verification, measurable outcomes",
+      "indicators": [
+        "Automated orchestration",
+        "Safety guardrails",
+        "Measurable outcomes",
+        "Continuous improvement"
+      ],
+      "blockers": [
+        "No orchestration",
+        "No guardrails",
+        "No measurement",
+        "Manual processes only"
+      ]
+    }
+  },
+  "confidenceLevels": {
+    "high": {
+      "description": "Strong evidence with multiple data points",
+      "threshold": 0.8,
+      "indicators": [
+        "Direct file evidence",
+        "Multiple corroborating sources",
+        "Clear patterns"
+      ]
+    },
+    "medium": {
+      "description": "Moderate evidence with some assumptions",
+      "threshold": 0.6,
+      "indicators": [
+        "Indirect evidence",
+        "Single source",
+        "Reasonable inferences"
+      ]
+    },
+    "low": {
+      "description": "Limited evidence with significant assumptions",
+      "threshold": 0.4,
+      "indicators": [
+        "No direct evidence",
+        "Multiple assumptions",
+        "Speculative conclusions"
+      ]
+    }
+  },
+  "recommendationCategories": {
+    "immediate": {
+      "priority": "high",
+      "timeframe": "0-30 days",
+      "description": "Critical foundation items that block progress"
+    },
+    "shortTerm": {
+      "priority": "medium",
+      "timeframe": "30-60 days",
+      "description": "Important improvements for next maturity level"
+    },
+    "mediumTerm": {
+      "priority": "medium",
+      "timeframe": "60-90 days",
+      "description": "Strategic improvements for advanced capabilities"
+    },
+    "longTerm": {
+      "priority": "low",
+      "timeframe": "90+ days",
+      "description": "Advanced optimizations and innovations"
+    }
+  }
+}
