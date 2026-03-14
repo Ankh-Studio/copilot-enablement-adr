@@ -5,9 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "bundle": "esbuild dist/index.js --bundle --platform=node --outfile=dist/bundle.js --format=cjs --external:@specfy/stack-analyser --external:@octokit/rest",
+    "bundle": "esbuild dist/index.js --bundle --platform=node --outfile=dist/bundle.js --format=cjs --external:@specfy/stack-analyser --external:@octokit/rest --external:@github/copilot-sdk",
     "format": "prettier --write \"**/*.{js,ts,json,md,yml,yaml}\"",
     "lint": "prettier --check \"**/*.{js,ts,json,md,yml,yaml}\"",
     "lint:ts": "eslint . --ext .ts",
@@ -26,17 +25,18 @@
   "author": "Ankh Studio",
   "license": "MIT",
   "dependencies": {
-    "@specfy/stack-analyser": "^1.27.6",
-    "@octokit/rest": "^20.0.0"
+    "@github/copilot-sdk": "^0.1.32",
+    "@octokit/rest": "^20.0.0",
+    "@specfy/stack-analyser": "^1.27.6"
   },
   "devDependencies": {
-    "prettier": "^3.0.0",
-    "typescript": "^5.0.0",
     "@types/node": "^20.0.0",
-    "eslint": "^8.57.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "esbuild": "^0.20.0"
+    "esbuild": "^0.20.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
   },
   "repository": {
     "type": "git",

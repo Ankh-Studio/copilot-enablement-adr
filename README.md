@@ -1,6 +1,6 @@
 # AI Enablement Assessment Plugin
 
-A TypeScript library that analyzes repository AI enablement readiness and generates consultant-quality Architecture Decision Records (ADRs) with evidence-based scoring, risk assessment, and phased implementation recommendations.
+A TypeScript library that leverages the GitHub Copilot SDK to analyze repository AI enablement readiness and generates consultant-quality Architecture Decision Records (ADRs) with evidence-based scoring, risk assessment, and phased implementation recommendations.
 
 ## 🚀 Quick Start
 
@@ -9,27 +9,38 @@ npm install @ankh-studio/copilot-enablement-adr
 ```
 
 ```typescript
-import { AIEnablementAssessment } from '@ankh-studio/copilot-enablement-adr';
+import CopilotPoweredAssessment from '@ankh-studio/copilot-enablement-adr';
 
-const assessment = new AIEnablementAssessment({
+const assessment = new CopilotPoweredAssessment({
   repoPath: './my-project',
   githubUrl: 'https://github.com/owner/repo',
   githubToken: process.env.GITHUB_TOKEN,
 });
 
-const result = await assessment.analyze();
-const adr = assessment.generateADR(result);
+const analysis = await assessment.analyze();
+const adr = await assessment.generateADR(analysis);
 console.log(adr);
 ```
 
 ## 📋 Features
 
-- **🔍 Comprehensive Tech Stack Analysis**: Detects 700+ technologies using @specfy/stack-analyser
-- **🛡️ GitHub Advanced Security Integration**: Analyzes CodeQL, Dependabot, and secret scanning
-- **📊 Evidence-Based Scoring**: Three-dimensional readiness assessment (Repo, Team, Org)
-- **🎯 8-Layer Maturity Path Assessment**: Path-to-agentic evaluation from foundations to orchestration
-- **📝 Consultant-Quality ADR Generation**: Professional proposals with actionable recommendations
-- **📦 Dual Output Formats**: Human-readable Markdown and machine-readable JSON
+- **🤖 Copilot SDK Powered**: Leverages GitHub Copilot's reasoning engine for analysis
+- **� Focused Data Collection**: Simple tools for tech stack, security, and artifact detection
+- **📊 Evidence-Based Analysis**: Copilot interprets signals and provides nuanced insights
+- **📝 Consultant-Quality ADRs**: Professional proposals with contextual recommendations
+- **� Tool-Based Architecture**: Extensible with custom analysis tools
+
+## 🦺 Prerequisites
+
+This plugin requires the GitHub Copilot CLI:
+
+```bash
+# Install Copilot CLI
+npm install -g @github/copilot
+
+# Authenticate
+copilot auth login
+```
 
 ## 📦 Installation
 
@@ -196,14 +207,25 @@ npm run bundle   # Bundled → dist/bundle.js (13.8KB)
 
 ## 🏗️ Architecture
 
+This plugin follows a simple, direct implementation approach:
+
 ```
-src/
-├── index.ts              # Main plugin logic
-├── interfaces/           # TypeScript interfaces
-├── analyzers/           # Tech stack and security analysis
-├── scoring/             # Readiness scoring algorithms
-└── generators/          # ADR generation templates
+copilot-enablement-adr/
+├── index.ts              # Main plugin logic and analysis engine
+├── skills/               # Orchestratable skill components
+│   ├── tech-stack-analyzer/
+│   ├── security-scanner/
+│   ├── readiness-scorer/
+│   └── adr-generator/
+├── templates/            # ADR and output templates
+└── dist/                 # Built distribution files
 ```
+
+**Design Philosophy**
+- **Small & Sharp**: Focused implementation without unnecessary abstraction layers
+- **Evidence-Based**: Analysis grounded in concrete detected signals
+- **Skill-First**: Components designed for future orchestration compatibility
+- **Composable**: Clean upgrade path to richer agent skills without overbuilding
 
 ## 📋 Dependencies
 

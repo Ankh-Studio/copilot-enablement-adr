@@ -1,7 +1,7 @@
 {
   "name": "ankh-copilot-enablement-adr",
   "displayName": "Ankh Copilot Enablement ADR",
-  "description": "Analyzes repository AI enablement readiness and generates consultant-quality ADR proposals",
+  "description": "SDK-powered plugin that analyzes repository AI enablement readiness and generates consultant-quality ADR proposals",
   "version": "1.0.0",
   "publisher": "AnkhStudio",
   "engines": {
@@ -13,47 +13,13 @@
     "enablement",
     "adr",
     "assessment",
-    "readiness",
-    "orchestration"
+    "copilot-sdk"
   ],
-  "main": "./skills/ai-enablement-orchestrator/SKILL.md",
-  "contributes": {
-    "skills": [
-      {
-        "id": "ai-enablement-orchestrator",
-        "name": "AI Enablement Orchestrator",
-        "description": "Metaskill that orchestrates comprehensive AI enablement assessment with consultant-quality ADR",
-        "entry": "./skills/ai-enablement-orchestrator/SKILL.md"
-      },
-      {
-        "id": "tech-stack-analyzer",
-        "name": "Tech Stack Analyzer",
-        "description": "Analyzes repository technology stack and infrastructure",
-        "entry": "./skills/tech-stack-analyzer/SKILL.md"
-      },
-      {
-        "id": "security-scanner", 
-        "name": "Security Scanner",
-        "description": "Analyzes GitHub Advanced Security features and posture",
-        "entry": "./skills/security-scanner/SKILL.md"
-      },
-      {
-        "id": "readiness-scorer",
-        "name": "Readiness Scorer", 
-        "description": "Calculates evidence-based readiness scores across repo, team, and org dimensions",
-        "entry": "./skills/readiness-scorer/SKILL.md"
-      },
-      {
-        "id": "adr-generator",
-        "name": "ADR Generator",
-        "description": "Generates consultant-quality Architecture Decision Records",
-        "entry": "./skills/adr-generator/SKILL.md"
-      }
-    ]
-  },
+  "main": "./index.js",
   "dependencies": {
-    "@specfy/stack-analyser": "^0.3.0",
-    "@octokit/rest": "^20.0.0"
+    "@specfy/stack-analyser": "^1.27.6",
+    "@octokit/rest": "^20.0.0",
+    "@github/copilot-sdk": "^0.1.0"
   },
   "capabilities": [
     "filesystem",
